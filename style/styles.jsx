@@ -32,6 +32,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     height: 30,
+   },
+   containerTelefone:{
+      backgroundColor: "white",
+      flex: 1,
+      alignContent: "center",
+      justifyContent: "center"
    }
 })
 

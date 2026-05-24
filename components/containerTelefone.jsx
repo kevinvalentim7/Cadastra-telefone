@@ -3,10 +3,11 @@ import styles from "../style/styles";
 import ColocaTexto from "../components/colocaTexto";
 import { useState } from "react";
 
-function ContainerTelefone(){
+function ContainerTelefone({nome}){
     return(
-        <View style={styles.ContainerTelefone}>
-            
+        <View style={styles.containerTelefone}>
+            <Text>Nome: {nome}</Text>
+            <Text><Telefone>: {telefone}</Telefone></Text>    
         </View>
     )
 }

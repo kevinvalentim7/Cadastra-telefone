@@ -13,15 +13,17 @@ function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    const usuario = await logarUsuario(login, password);
+  const handleLogin = () => {
+    const usuario = logarUsuario(login, password);
+
     if (usuario) {
-      router.push("/listaTelefone");
+      Alert.alert("Sucesso", "Usuário logado");
+      router.push("/home");
     } else {
       Alert.alert("Erro", "Login ou senha incorretos");
     }
-  };
-
+  }
+  
   return (
 
     <View style={styles.container}>

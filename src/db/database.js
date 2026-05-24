@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import * as SQLite from 'expo-sqlite';
 
 // =========================
@@ -124,12 +125,13 @@ export const logarUsuario = (login, senha) => {
 
   try {
 
-    const usuario = db. getFirstSync(
+    const usuario = db.getFirstSync(
       `
       SELECT * FROM usuarios
       WHERE login = ? AND senha = ?
       `,
       [login, senha]
+
     );
 
     return usuario;

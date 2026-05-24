@@ -47,6 +47,14 @@ function Cadastro(){
 
         Alert.alert("Sucesso", "Usuário cadastrado");
         router.push("/login");
+        console.log({
+            login,
+            password,
+            email,
+            celular,
+            perguntaSeguranca,
+            respostaSeguranca
+        });
     }
 
     return(
