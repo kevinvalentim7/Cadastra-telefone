@@ -8,6 +8,7 @@ import { router } from "expo-router";
 
 function Cadastro(){
 
+    const [nome, setNome] = useState("");
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -18,7 +19,8 @@ function Cadastro(){
 
     function cadastrar(){
 
-        if(
+        if( 
+            !nome ||
             !login ||
             !password ||
             !confirmPassword ||
@@ -37,6 +39,7 @@ function Cadastro(){
         }
 
         inserirUsuario(
+            nome,
             login,
             password,
             email,
@@ -48,6 +51,7 @@ function Cadastro(){
         Alert.alert("Sucesso", "Usuário cadastrado");
         router.push("/login");
         console.log({
+            nome,
             login,
             password,
             email,
@@ -61,6 +65,11 @@ function Cadastro(){
         <View style={styles.container}>
             <Topo/>
         <View style={{ flex: 1, justifyContent: "center", width: "100%", alignItems: "center" }}>
+            <ColocaTexto
+                placeholder="Nome"
+                value={nome}
+                onChangeText={setNome}
+            />
             <ColocaTexto
                 placeholder="Login"
                 value={login}
