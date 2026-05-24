@@ -145,6 +145,32 @@ export const logarUsuario = (login, senha) => {
 
 };
 
+//trocar a senha do usuário
+
+export const trocarSenha = (login, senha) => {
+
+  try {
+
+    const usuario = db.getFirstSync(
+      `
+      SELECT * FROM usuarios
+      WHERE login = ? AND senha = ?
+      `,
+      [login, senha]
+
+    );
+
+    return usuario;
+
+  } catch (error) {
+
+    console.log("Erro ao logar usuário:", error);
+    return null;
+
+  }
+
+};
+
 // =========================
 // INSERIR CONTATO
 // =========================

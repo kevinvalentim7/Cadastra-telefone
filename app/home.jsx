@@ -4,8 +4,8 @@ import styles from "../style/styles";
 function Home(){
     return(
         <View>
-            <TouchableOpacity>
-                <Text>Cadastrar novo telefone</Text>
+            <TouchableOpacity style={styles.estiloBotao}>
+                <Text>Cadastrar novo telefone +</Text>
             </TouchableOpacity>
         </View>
     )
