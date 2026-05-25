@@ -1,17 +1,17 @@
-import { router } from 'expo-router';
-import * as SQLite from 'expo-sqlite';
+import * as SQLite from "expo-sqlite";
 
 // =========================
 // ABRIR BANCO
 // =========================
 
-export const db = SQLite.openDatabaseSync('autenticacao.db');
+export const db = SQLite.openDatabaseSync("autenticacao.db");
 
 // =========================
 // INICIALIZAR BANCO
 // =========================
 
 export function criarTabela() {
+
   try {
 
     // =========================
@@ -65,9 +65,12 @@ export function criarTabela() {
     console.log("Banco inicializado com sucesso");
 
   } catch (error) {
+
     console.log("Erro ao inicializar banco:", error);
+
   }
-};
+
+}
 
 // =========================
 // INSERIR USUÁRIO
@@ -112,7 +115,10 @@ export const inserirUsuario = (
     return resultado;
 
   } catch (error) {
+
     console.log("Erro ao inserir usuário:", error);
+    return null;
+
   }
 
 };
@@ -121,7 +127,10 @@ export const inserirUsuario = (
 // LOGIN USUÁRIO
 // =========================
 
-export const logarUsuario = (login, senha) => {
+export const logarUsuario = (
+  login,
+  senha
+) => {
 
   try {
 
@@ -131,7 +140,6 @@ export const logarUsuario = (login, senha) => {
       WHERE login = ? AND senha = ?
       `,
       [login, senha]
-
     );
 
     return usuario;
@@ -145,27 +153,47 @@ export const logarUsuario = (login, senha) => {
 
 };
 
-//trocar a senha do usuário
+// =========================
+// TROCAR SENHA
+// =========================
 
-export const trocarSenha = (login, senha) => {
+export const esqueciSenha = (
+  login,
+  respostaSeguranca,
+  novaSenha
+) => {
 
   try {
 
     const usuario = db.getFirstSync(
       `
       SELECT * FROM usuarios
-      WHERE login = ? AND senha = ?
+      WHERE login = ? AND respostaSeguranca = ?
       `,
-      [login, senha]
-
+      [login, respostaSeguranca]
     );
 
-    return usuario;
+    if (!usuario) {
+
+      return false;
+
+    }
+
+    db.runSync(
+      `
+      UPDATE usuarios
+      SET senha = ?
+      WHERE login = ?
+      `,
+      [novaSenha, login]
+    );
+
+    return true;
 
   } catch (error) {
 
-    console.log("Erro ao logar usuário:", error);
-    return null;
+    console.log("Erro ao trocar senha:", error);
+    return false;
 
   }
 
@@ -229,7 +257,10 @@ export const inserirContato = (
     return resultado;
 
   } catch (error) {
+
     console.log("Erro ao inserir contato:", error);
+    return null;
+
   }
 
 };
@@ -242,14 +273,47 @@ export const listarContatos = () => {
 
   try {
 
-    return db.getAllSync(`
+    const contatos = db.getAllSync(
+      `
       SELECT * FROM contatos
       ORDER BY nomeCompleto
-    `);
+      `
+    );
+
+    return contatos;
 
   } catch (error) {
+
     console.log("Erro ao listar contatos:", error);
     return [];
+
+  }
+
+};
+
+// =========================
+// BUSCAR CONTATO POR ID
+// =========================
+
+export const buscarContatoPorId = (id) => {
+
+  try {
+
+    const contato = db.getFirstSync(
+      `
+      SELECT * FROM contatos
+      WHERE id = ?
+      `,
+      [id]
+    );
+
+    return contato;
+
+  } catch (error) {
+
+    console.log("Erro ao buscar contato:", error);
+    return null;
+
   }
 
 };
@@ -270,8 +334,13 @@ export const deletarContato = (id) => {
       [id]
     );
 
+    return true;
+
   } catch (error) {
+
     console.log("Erro ao deletar contato:", error);
+    return false;
+
   }
 
 };
@@ -333,8 +402,13 @@ export const atualizarContato = (
       ]
     );
 
+    return true;
+
   } catch (error) {
+
     console.log("Erro ao atualizar contato:", error);
+    return false;
+
   }
 
 };

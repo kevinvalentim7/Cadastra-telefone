@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <SafeAreaProvider>
 
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
 
         <Stack
           screenOptions={{
